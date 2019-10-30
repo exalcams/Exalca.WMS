@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { CustomValidator } from 'app/shared/custom-validator';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { ForgotPassword } from 'app/models/master';
+import { ForgotPassword } from 'app/model/master';
 
 @Component({
   selector: 'forgot-password',

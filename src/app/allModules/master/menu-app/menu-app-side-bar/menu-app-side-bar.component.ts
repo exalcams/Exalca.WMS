@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter, OnCh
 import { fuseAnimations } from '@fuse/animations';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
-import { MenuApp } from 'app/models/master';
+import { MenuApp } from 'app/model/master';
 
 @Component({
   selector: 'menu-app-side-bar',

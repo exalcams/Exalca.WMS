@@ -9,7 +9,7 @@ import { AuthService } from 'app/services/auth.service';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { EMailModel } from 'app/models/master';
+import { EMailModel } from 'app/model/master';
 
 @Component({
   selector: 'link-for-forget-password',

@@ -12,7 +12,7 @@ import { MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MasterService } from 'app/services/master.service';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { AuthenticationDetails, UserNotification, ChangePassword } from 'app/models/master';
+import { AuthenticationDetails, UserNotification, ChangePassword } from 'app/model/master';
 import { ChangePassDialogComponent } from './change-pass-dialog/change-pass-dialog.component';
 
 @Component({

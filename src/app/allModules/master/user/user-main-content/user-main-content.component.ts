@@ -10,7 +10,7 @@ import { AuthService } from 'app/services/auth.service';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
 import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 import { Router } from '@angular/router';
-import { UserWithRole, RoleWithApp, AuthenticationDetails } from 'app/models/master';
+import { UserWithRole, RoleWithApp, AuthenticationDetails } from 'app/model/master';
 
 @Component({
   selector: 'user-main-content',

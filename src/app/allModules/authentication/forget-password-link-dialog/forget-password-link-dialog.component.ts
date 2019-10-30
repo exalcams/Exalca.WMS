@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Inject, isDevMode } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { EMailModel } from 'app/models/master';
+import { EMailModel } from 'app/model/master';
 import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { WINDOW } from 'app/window.providers';

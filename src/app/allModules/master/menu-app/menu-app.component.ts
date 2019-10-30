@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { MenuApp, AuthenticationDetails } from 'app/models/master';
+import { MenuApp, AuthenticationDetails } from 'app/model/master';
 
 @Component({
   selector: 'menu-app',

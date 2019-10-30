@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Guid } from 'guid-typescript';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
-import { RoleWithApp } from 'app/models/master';
+import { RoleWithApp } from 'app/model/master';
 
 @Component({
   selector: 'role-side-bar',

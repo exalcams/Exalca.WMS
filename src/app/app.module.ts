@@ -21,7 +21,6 @@ import { DatePipe } from '@angular/common';
 import { NotificationDialogComponent } from './notifications/notification-dialog/notification-dialog.component';
 import { WINDOW_PROVIDERS } from './window.providers';
 
-
 const appRoutes: Routes = [
     {
         path: 'auth',
@@ -34,6 +33,10 @@ const appRoutes: Routes = [
     {
         path: 'master',
         loadChildren: './allModules/master/master.module#MasterModule'
+    },
+    {
+        path: 'warehouseMaster',
+        loadChildren: './allModules/warehouse-master/warehouse-master.module#WarehouseMasterModule'
     },
     {
         path: '**',

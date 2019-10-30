@@ -13,7 +13,7 @@ import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notific
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigation } from '@fuse/types';
 import { MenuUpdataionService } from 'app/services/menu-update.service';
-import { AuthenticationDetails, ChangePassword, EMailModel } from 'app/models/master';
+import { AuthenticationDetails, ChangePassword, EMailModel } from 'app/model/master';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import { ForgetPasswordLinkDialogComponent } from '../forget-password-link-dialog/forget-password-link-dialog.component';
 
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   MenuItems: string[];
   children: FuseNavigation[] = [];
   subChildren: FuseNavigation[] = [];
+  subChildren1: FuseNavigation[] = [];
   private _unsubscribeAll: Subject<any>;
   message = 'Snack Bar opened.';
   actionButtonLabel = 'Retry';
@@ -241,6 +242,37 @@ export class LoginComponent implements OnInit {
         type: 'collapsable',
         icon: 'view_list',
         children: this.subChildren
+      }
+      );
+    }
+    if (this.MenuItems.indexOf('Warehouse') >= 0) {
+      this.subChildren1.push(
+        {
+          id: 'warehouse',
+          title: 'Warehouse',
+          type: 'item',
+          url: '/warehouseMaster/warehouse'
+        }
+      );
+    }
+    if (this.MenuItems.indexOf('WarehouseBin') >= 0) {
+      this.subChildren1.push(
+        {
+          id: 'warehouseBin',
+          title: 'Warehouse-Bin',
+          type: 'item',
+          url: '/warehouseMaster/warehouseBin'
+        }
+      );
+    }
+    if (this.MenuItems.indexOf('Warehouse') >= 0 || this.MenuItems.indexOf('WarehouseBin') >= 0) {
+      this.children.push({
+        id: 'warehouseMaster',
+        title: 'Warehouse Master',
+        // translate: 'NAV.DASHBOARDS',
+        type: 'collapsable',
+        icon: 'view_list',
+        children: this.subChildren1
       }
       );
     }

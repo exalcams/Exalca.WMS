@@ -8,7 +8,7 @@ import { NotificationSnackBarComponent } from 'app/notifications/notification-sn
 import { MatSnackBar } from '@angular/material';
 import { CustomValidator } from 'app/shared/custom-validator';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { ChangePassword, AuthenticationDetails } from 'app/models/master';
+import { ChangePassword, AuthenticationDetails } from 'app/model/master';
 
 @Component({
   selector: 'change-password',

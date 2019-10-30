@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Guid } from 'guid-typescript';
-import { ChangePassword, ForgotPassword, EMailModel } from 'app/models/master';
+import { ChangePassword, ForgotPassword, EMailModel } from 'app/model/master';
 import { environment } from 'environments/environment';
 
 

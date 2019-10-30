@@ -7,7 +7,7 @@ import { MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
 import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 import { Router } from '@angular/router';
-import { RoleWithApp, MenuApp, AuthenticationDetails } from 'app/models/master';
+import { RoleWithApp, MenuApp, AuthenticationDetails } from 'app/model/master';
 
 @Component({
   selector: 'role-main-content',

@@ -4,7 +4,7 @@ import { MatIconRegistry, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
-import { AuthenticationDetails } from 'app/models/master';
+import { AuthenticationDetails } from 'app/model/master';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({

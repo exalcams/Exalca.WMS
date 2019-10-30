@@ -4,7 +4,7 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { _MatChipListMixinBase } from '@angular/material';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
-import { MenuApp, RoleWithApp, UserWithRole, UserNotification } from 'app/models/master';
+import { MenuApp, RoleWithApp, UserWithRole, UserNotification } from 'app/model/master';
 
 @Injectable({
   providedIn: 'root'
