@@ -114,8 +114,8 @@ export class WarehouseMasterService {
             .pipe(catchError(this.errorHandler));
     }
 
-    GetAllArticle(): Observable<MArticle[] | string> {
-        return this._httpClient.get<MArticle[]>(`${this.baseAddress}api/WarehouseMaster/GetAllArticle`)
+    GetAllArticles(): Observable<MArticle[] | string> {
+        return this._httpClient.get<MArticle[]>(`${this.baseAddress}api/WarehouseMaster/GetAllArticles`)
             .pipe(catchError(this.errorHandler));
     }
 

@@ -1,0 +1,138 @@
+<div id="chat" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center normal">
+    <div class="m-12 p-0 content-card" style="border-radius: 10px" fxLayout>
+      <div fxFlex="40" class="rightBorder article-side-bar">
+        <div class="sidenav-header">
+          <mat-toolbar>
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="search-wrapper" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon class="s-16">search</mat-icon>
+                  <input [(ngModel)]="searchText" type="text" placeholder="Search" fxFlex>
+                </div>
+              </div>
+              <div fxFlex fxLayout="row" fxLayoutAlign="end center">
+                <button mat-mini-fab class="mr-8" matTooltip="Add Article" (click)="AddArticle()">
+                  <mat-icon aria-label="Add Article">add</mat-icon>
+                </button>
+              </div>
+            </mat-toolbar-row>
+          </mat-toolbar>
+        </div>
+        <div class="sidenav-content py-16" fusePerfectScrollbar fxFlex>
+          <div *ngFor="let ap of AllArticles | filter: searchText">
+            <div [attr.aria-label]="ap.Description">
+              <div fxLayout="row" fxLayoutAlign="start center" class="side-bar-items" matRipple
+                (click)="loadSelectedArticle(ap)" [ngClass]="{'active accent':selectCode==ap.Code}">
+                <div fxFlex fxLayoutAlign="start center">
+                  {{ap.Description}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="(AllArticles | filter: searchText).length === 0" class="no-results-message">
+            <span class="pl-12"> No results..</span>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="60">
+        <form class="mat-card mat-elevation-z4 p-24 normal" autocomplete="off" fxLayout="column" fxLayoutAlign="start"
+          fxFlex="1 0 auto" name="form" [formGroup]="ArticleFormGroup">
+
+          <div class="h2 mb-24">{{SelectedArticle.Code?'Update':'Create'}} Article</div>
+          <div fxLayout="row wrap" fxLayoutAlign="start">
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Description" formControlName="Description">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('Description').touched && ArticleFormGroup.get('Description').hasError('required')">
+                Description is required</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Net Weight" formControlName="NetWeight">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('NetWeight').touched && ArticleFormGroup.get('NetWeight').hasError('required')">
+                Net Weight is required</mat-error>
+              <mat-error *ngIf="ArticleFormGroup.get('NetWeight').touched && !ArticleFormGroup.get('NetWeight').hasError('required')
+                && ArticleFormGroup.get('NetWeight').hasError('pattern')">
+                Enter valid Net Weight</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="start">
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Volume" formControlName="Volume">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('Volume').touched && ArticleFormGroup.get('Volume').hasError('required')">
+                Volume is required</mat-error>
+              <mat-error *ngIf="ArticleFormGroup.get('Volume').touched && !ArticleFormGroup.get('Volume').hasError('required')
+                && ArticleFormGroup.get('Volume').hasError('pattern')">
+                Enter valid volume</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="UOM" formControlName="UOM">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('UOM').touched && ArticleFormGroup.get('UOM').hasError('required')">
+                UOM is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutAlign="start">
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Self life days" formControlName="SelfLifeDays">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('SelfLifeDays').touched && ArticleFormGroup.get('SelfLifeDays').hasError('required')">
+                Self life days is required</mat-error>
+              <mat-error *ngIf="ArticleFormGroup.get('SelfLifeDays').touched && !ArticleFormGroup.get('SelfLifeDays').hasError('required')
+                && ArticleFormGroup.get('SelfLifeDays').hasError('pattern')">
+                Enter a valid Self life days</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="WarehouseID" formControlName="WarehouseID">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('WarehouseID').touched && ArticleFormGroup.get('WarehouseID').hasError('required')">
+                Warehouse ID is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="start">
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Area" formControlName="Area">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('Area').touched && ArticleFormGroup.get('Area').hasError('required')">
+                Area is required</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Section" formControlName="Section">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('Section').touched && ArticleFormGroup.get('Section').hasError('required')">
+                Section is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="start" fxFlex="1 0 auto">
+            <mat-form-field fxFlex="50" class="px-8">
+              <input matInput placeholder="Bin" formControlName="Bin">
+              <mat-error
+                *ngIf="ArticleFormGroup.get('Bin').touched && ArticleFormGroup.get('Bin').hasError('required')">
+                Bin is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="end">
+            <button mat-raised-button type="button" (click)="ResetControl()" *ngIf="!SelectedArticle.Code"
+              style="margin-right:10px">
+              Clear
+            </button>
+            <button mat-raised-button color="warn" type="button" (click)="DeleteClicked()" *ngIf="SelectedArticle.Code"
+              style="margin-right:10px">
+              Delete
+            </button>
+            <button mat-raised-button color="accent" type="button" (click)="SaveClicked()">
+              {{SelectedArticle.Code?'Update':'Create'}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion1" color="accent" mode="indeterminate">
+    </mat-progress-spinner>
+    <div id="overlay" *ngIf="IsProgressBarVisibile"></div>
+  </div>
+</div>

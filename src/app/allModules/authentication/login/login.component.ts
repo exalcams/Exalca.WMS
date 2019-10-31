@@ -265,6 +265,16 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+    if (this.MenuItems.indexOf('Article') >= 0) {
+      this.subChildren1.push(
+        {
+          id: 'article',
+          title: 'Article',
+          type: 'item',
+          url: '/warehouseMaster/article'
+        }
+      );
+    }
     if (this.MenuItems.indexOf('Warehouse') >= 0 || this.MenuItems.indexOf('WarehouseBin') >= 0) {
       this.children.push({
         id: 'warehouseMaster',

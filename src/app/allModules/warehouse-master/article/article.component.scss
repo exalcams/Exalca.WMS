@@ -17,7 +17,7 @@
       border-radius: 10px;
     }
   }
-  .warehouse-bin-side-bar {
+  .article-side-bar {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -159,8 +159,5 @@
     cursor: pointer;
     border-radius: 0 25px 25px 0;
     margin-right: 7px;
-  }
-  input[readonly]{
-    color:rgba(0, 0, 0, 0.38) !important;
   }
 }

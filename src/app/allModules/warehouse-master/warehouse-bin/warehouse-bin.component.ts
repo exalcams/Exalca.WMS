@@ -38,9 +38,9 @@ export class WarehouseBinComponent implements OnInit {
       Area: ['', Validators.required],
       Section: ['', Validators.required],
       Bin: ['', Validators.required],
-      Volume: ['', Validators.required],
-      Weight: ['', Validators.required],
-      CapacityUtilized: ['', Validators.required]
+      Volume: ['', [Validators.required, Validators.pattern('^[0-9]+(.[0-9]{1,3})?$')]],
+      Weight: ['', [Validators.required, Validators.pattern('^[0-9]+(.[0-9]{1,3})?$')]],
+      CapacityUtilized: ['', [Validators.required, Validators.pattern('^[0-9]+(.[0-9]{1,3})?$')]]
     });
   }
   ngOnInit(): void {
@@ -88,14 +88,19 @@ export class WarehouseBinComponent implements OnInit {
   loadSelectedWarehouseBin(WarehouseBin: MWarehouseBin): void {
     this.SelectedWarehouseBin = WarehouseBin;
     this.selectWarehouseBinID = WarehouseBin.WarehouseID;
-    this.WarehouseBinFormGroup.get('WarehouseID').patchValue(WarehouseBin.WarehouseID);
-    this.WarehouseBinFormGroup.get('Area').patchValue(WarehouseBin.Area);
-    this.WarehouseBinFormGroup.get('Section').patchValue(WarehouseBin.Section);
-    this.WarehouseBinFormGroup.get('Bin').patchValue(WarehouseBin.Bin);
-    this.WarehouseBinFormGroup.get('Volume').patchValue(WarehouseBin.Volume);
-    this.WarehouseBinFormGroup.get('Weight').patchValue(WarehouseBin.Weight);
-    this.WarehouseBinFormGroup.get('CapacityUtilized').patchValue(WarehouseBin.CapacityUtilized);
+    this.InsertWarhouseBinDeatils();
   }
+
+  InsertWarhouseBinDeatils(): void {
+    this.WarehouseBinFormGroup.get('WarehouseID').patchValue(this.SelectedWarehouseBin.WarehouseID);
+    this.WarehouseBinFormGroup.get('Area').patchValue(this.SelectedWarehouseBin.Area);
+    this.WarehouseBinFormGroup.get('Section').patchValue(this.SelectedWarehouseBin.Section);
+    this.WarehouseBinFormGroup.get('Bin').patchValue(this.SelectedWarehouseBin.Bin);
+    this.WarehouseBinFormGroup.get('Volume').patchValue(this.SelectedWarehouseBin.Volume);
+    this.WarehouseBinFormGroup.get('Weight').patchValue(this.SelectedWarehouseBin.Weight);
+    this.WarehouseBinFormGroup.get('CapacityUtilized').patchValue(this.SelectedWarehouseBin.CapacityUtilized);
+  }
+
   SaveClicked(): void {
     if (this.WarehouseBinFormGroup.valid) {
       if (this.SelectedWarehouseBin.WarehouseID) {
@@ -157,7 +162,7 @@ export class WarehouseBinComponent implements OnInit {
     this.IsProgressBarVisibile = true;
     this._WarehouseMasterService.CreateWarehouseBin(this.SelectedWarehouseBin).subscribe((data) => {
       this.IsProgressBarVisibile = false;
-      this.notificationSnackBarComponent.openSnackBar('WarehouseBin created successfully', SnackBarStatus.success);
+      this.notificationSnackBarComponent.openSnackBar('Warehouse bin created successfully', SnackBarStatus.success);
       this.GetAllWarehouseBins();
     }, (err) => {
       console.error(err);
@@ -171,7 +176,7 @@ export class WarehouseBinComponent implements OnInit {
     this.IsProgressBarVisibile = true;
     this._WarehouseMasterService.UpdateWarehouseBin(this.SelectedWarehouseBin).subscribe((data) => {
       this.IsProgressBarVisibile = false;
-      this.notificationSnackBarComponent.openSnackBar('WarehouseBin updated successfully', SnackBarStatus.success);
+      this.notificationSnackBarComponent.openSnackBar('Warehouse bin updated successfully', SnackBarStatus.success);
       this.GetAllWarehouseBins();
     }, (err) => {
       console.error(err);
@@ -185,7 +190,7 @@ export class WarehouseBinComponent implements OnInit {
     this.IsProgressBarVisibile = true;
     this._WarehouseMasterService.DeleteWarehouseBin(this.SelectedWarehouseBin).subscribe((data) => {
       this.IsProgressBarVisibile = false;
-      this.notificationSnackBarComponent.openSnackBar('WarehouseBin deleted successfully', SnackBarStatus.success);
+      this.notificationSnackBarComponent.openSnackBar('Warehouse bin deleted successfully', SnackBarStatus.success);
       this.ResetControl();
       this.GetAllWarehouseBins();
     }, (err) => {
@@ -201,7 +206,7 @@ export class WarehouseBinComponent implements OnInit {
     this.SelectedWarehouseBin.Section = this.WarehouseBinFormGroup.get('Section').value;
     this.SelectedWarehouseBin.Bin = this.WarehouseBinFormGroup.get('Bin').value;
     this.SelectedWarehouseBin.Volume = this.WarehouseBinFormGroup.get('Volume').value;
-    this.SelectedWarehouseBin.Weight = this.WarehouseBinFormGroup.get('Volume').value;
+    this.SelectedWarehouseBin.Weight = this.WarehouseBinFormGroup.get('Weight').value;
     this.SelectedWarehouseBin.CapacityUtilized = this.WarehouseBinFormGroup.get('CapacityUtilized').value;
   }
 }

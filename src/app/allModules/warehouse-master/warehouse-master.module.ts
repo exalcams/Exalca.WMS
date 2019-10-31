@@ -13,6 +13,7 @@ import { FuseProgressBarModule } from '@fuse/components';
 import { FileUploadModule } from 'ng2-file-upload';
 import { WarehouseComponent } from './warehouse/warehouse.component';
 import { WarehouseBinComponent } from './warehouse-bin/warehouse-bin.component';
+import { ArticleComponent } from './article/article.component';
 
 const menuRoutes: Routes = [
     {
@@ -24,14 +25,15 @@ const menuRoutes: Routes = [
         component: WarehouseBinComponent,
     },
     {
-        path: 'user',
-        // component: UserComponent,
+        path: 'article',
+        component: ArticleComponent,
     },
 ];
 @NgModule({
     declarations: [
         WarehouseComponent,
-        WarehouseBinComponent
+        WarehouseBinComponent,
+        ArticleComponent
     ],
     imports: [
         MatButtonModule,
