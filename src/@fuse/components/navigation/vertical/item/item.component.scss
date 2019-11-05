@@ -3,7 +3,9 @@
     .folded:not(.unfolded) & {
 
         .nav-link {
-
+            border-radius: 20px;
+            margin: 0 12px;
+            padding: 0 12px;
             > .nav-link-title,
             > .nav-link-badge {
                 opacity: 0;

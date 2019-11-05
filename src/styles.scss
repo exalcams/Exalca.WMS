@@ -48,6 +48,55 @@
   font-size: 15px !important;
   padding-top: 10px !important;
 }
+.mat-form-field-appearance-outline {
+  .mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  top: 0.4em !important;
+}
+.mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.002em 0px !important;
+}
+.normal .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4375em 0 !important;
+}
+.normal {
+  .mat-input-element {
+    padding-bottom: 8px !important;
+  }
+  .mat-select-value {
+    padding-bottom: 13px !important;
+  }
+}
+.mat-form-field-label-wrapper {
+  top: -1em;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-0.5em) scale(0.75);
+}
+
+.mat-form-field-suffix .mat-icon-button {
+  width: 2.5em;
+  height: 1.5em !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 0px 0 0 0px !important;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: 0px 0 0 0px !important;
+}
+
+.mat-form-field-outline-gap {
+  border: 1px solid #1b56ca;
+  border-radius: 1e-6px;
+}
+.mat-form-field-wrapper {
+  padding-bottom: 0.7em !important;
+}
 #overlay {
   position: fixed;
   width: 100%;

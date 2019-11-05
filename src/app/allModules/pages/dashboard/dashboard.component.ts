@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
@@ -19,7 +18,10 @@ export class DashboardComponent implements OnInit {
   MenuItems: string[];
   notificationSnackBarComponent: NotificationSnackBarComponent;
  
-  constructor(private _router: Router, matIconRegistry: MatIconRegistry, sanitizer: DomSanitizer, public snackBar: MatSnackBar) {
+  constructor(
+    private _router: Router, 
+    public snackBar: MatSnackBar
+    ) {
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
   }
 

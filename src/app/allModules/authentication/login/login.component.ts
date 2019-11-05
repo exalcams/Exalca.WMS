@@ -203,6 +203,18 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+    if (this.MenuItems.indexOf('Inward') >= 0) {
+      this.children.push(
+        {
+          id: 'inward',
+          title: 'Inward',
+          translate: 'NAV.SAMPLE.TITLE',
+          type: 'item',
+          icon: 'dashboard',
+          url: '/pages/inward',
+        }
+      );
+    }
     if (this.MenuItems.indexOf('App') >= 0) {
       this.subChildren.push(
         {
