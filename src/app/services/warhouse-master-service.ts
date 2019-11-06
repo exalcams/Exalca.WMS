@@ -8,7 +8,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 
 import { catchError } from 'rxjs/operators';
 
-import { MWarehouse, MWarehouseBin, MArticle } from 'app/model/warehouse-master-model';
+import { MWarehouse, MWarehouseBin, MArticle, MUOM } from 'app/model/warehouse-master-model';
 
 @Injectable({
     providedIn: 'root'
@@ -102,8 +102,8 @@ export class WarehouseMasterService {
             .pipe(catchError(this.errorHandler));
     }
 
-     // Article
-     CreateArticle(Article: MArticle): Observable<any> {
+    // Article
+    CreateArticle(Article: MArticle): Observable<any> {
         return this._httpClient.post<any>(`${this.baseAddress}api/WarehouseMaster/CreateArticle`,
             Article,
             {
@@ -141,4 +141,47 @@ export class WarehouseMasterService {
             .pipe(catchError(this.errorHandler));
     }
 
+    // UOM
+    CreateUOM(UOM: MUOM): Observable<any> {
+        return this._httpClient.post<any>(`${this.baseAddress}api/WarehouseMaster/CreateUOM`,
+            UOM,
+            {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json'
+                })
+            })
+            .pipe(catchError(this.errorHandler));
+    }
+
+    GetAllUOMs(): Observable<MUOM[] | string> {
+        return this._httpClient.get<MUOM[]>(`${this.baseAddress}api/WarehouseMaster/GetAllUOMs`)
+            .pipe(catchError(this.errorHandler));
+    }
+
+    UpdateUOM(UOM: MUOM): Observable<any> {
+        return this._httpClient.post<any>(`${this.baseAddress}api/WarehouseMaster/UpdateUOM`,
+            UOM,
+            {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json'
+                })
+            })
+            .pipe(catchError(this.errorHandler));
+    }
+
+    DeleteUOM(UOM: MUOM): Observable<any> {
+        return this._httpClient.post<any>(`${this.baseAddress}api/WarehouseMaster/DeleteUOM`,
+            UOM,
+            {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json'
+                })
+            })
+            .pipe(catchError(this.errorHandler));
+    }
+
+    GetAllGRNItemBatches(): Observable<string[] | string> {
+        return this._httpClient.get<string[]>(`${this.baseAddress}api/WarehouseMaster/GetAllGRNItemBatches`)
+            .pipe(catchError(this.errorHandler));
+    }
 }

@@ -26,3 +26,9 @@ export class MArticle extends CommonClass {
     Bin: string;
 }
 
+export class MUOM extends CommonClass {
+    ID: number;
+    Code: string;
+    Description: string;
+}
+

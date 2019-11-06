@@ -72,3 +72,45 @@ export class PhysicalInventoryItem extends CommonClass {
     Difference: number;
     Reason: string;
 }
+
+export class GRNWithItemView extends CommonClass {
+    GRNumber: number;
+    Vendor: string;
+    // GRNDate: Date;
+    // GRNTime: string;
+    // Mode: string;
+    TruckNumber: string;
+    ChallanNumber: string;
+    ChallanDate?: Date;
+    GRNItems: GRNItemView[];
+}
+
+export class GRNItemView {
+    GRNumber: number;
+    Code: number;
+    Description: string;
+    Batch: string;
+    Quantity: number;
+    UOM: string;
+    ManufacturedDate: Date;
+    ExpiredDate?: Date;
+}
+
+export class OutboundWithItemView extends CommonClass {
+    OutboundID: number;
+    Customer: string;
+    TransferID: string;
+    Date?: Date;
+    OutboundItems: OutboundItemView[];
+}
+
+export class OutboundItemView {
+    OutboundID: number;
+    Code: number;
+    Description: string;
+    Batch: string;
+    Quantity: number;
+    UOM: string;
+    ManufacturedDate: Date;
+    ExpiredDate?: Date;
+}

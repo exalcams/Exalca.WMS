@@ -210,9 +210,63 @@ export class LoginComponent implements OnInit {
           title: 'Inward',
           translate: 'NAV.SAMPLE.TITLE',
           type: 'item',
-          icon: 'dashboard',
+          icon: 'list',
           url: '/pages/inward',
         }
+      );
+    }
+    if (this.MenuItems.indexOf('Outward') >= 0) {
+      this.children.push(
+        {
+          id: 'outward',
+          title: 'Outward',
+          translate: 'NAV.SAMPLE.TITLE',
+          type: 'item',
+          icon: 'storage',
+          url: '/pages/outward',
+        }
+      );
+    }
+    
+    if (this.MenuItems.indexOf('Warehouse') >= 0) {
+      this.subChildren1.push(
+        {
+          id: 'warehouse',
+          title: 'Warehouse',
+          type: 'item',
+          url: '/warehouseMaster/warehouse'
+        }
+      );
+    }
+    if (this.MenuItems.indexOf('WarehouseBin') >= 0) {
+      this.subChildren1.push(
+        {
+          id: 'warehouseBin',
+          title: 'Warehouse-Bin',
+          type: 'item',
+          url: '/warehouseMaster/warehouseBin'
+        }
+      );
+    }
+    if (this.MenuItems.indexOf('Article') >= 0) {
+      this.subChildren1.push(
+        {
+          id: 'article',
+          title: 'Article',
+          type: 'item',
+          url: '/warehouseMaster/article'
+        }
+      );
+    }
+    if (this.MenuItems.indexOf('Warehouse') >= 0 || this.MenuItems.indexOf('WarehouseBin') >= 0) {
+      this.children.push({
+        id: 'warehouseMaster',
+        title: 'Warehouse Master',
+        // translate: 'NAV.DASHBOARDS',
+        type: 'collapsable',
+        icon: 'view_list',
+        children: this.subChildren1
+      }
       );
     }
     if (this.MenuItems.indexOf('App') >= 0) {
@@ -254,47 +308,6 @@ export class LoginComponent implements OnInit {
         type: 'collapsable',
         icon: 'view_list',
         children: this.subChildren
-      }
-      );
-    }
-    if (this.MenuItems.indexOf('Warehouse') >= 0) {
-      this.subChildren1.push(
-        {
-          id: 'warehouse',
-          title: 'Warehouse',
-          type: 'item',
-          url: '/warehouseMaster/warehouse'
-        }
-      );
-    }
-    if (this.MenuItems.indexOf('WarehouseBin') >= 0) {
-      this.subChildren1.push(
-        {
-          id: 'warehouseBin',
-          title: 'Warehouse-Bin',
-          type: 'item',
-          url: '/warehouseMaster/warehouseBin'
-        }
-      );
-    }
-    if (this.MenuItems.indexOf('Article') >= 0) {
-      this.subChildren1.push(
-        {
-          id: 'article',
-          title: 'Article',
-          type: 'item',
-          url: '/warehouseMaster/article'
-        }
-      );
-    }
-    if (this.MenuItems.indexOf('Warehouse') >= 0 || this.MenuItems.indexOf('WarehouseBin') >= 0) {
-      this.children.push({
-        id: 'warehouseMaster',
-        title: 'Warehouse Master',
-        // translate: 'NAV.DASHBOARDS',
-        type: 'collapsable',
-        icon: 'view_list',
-        children: this.subChildren1
       }
       );
     }

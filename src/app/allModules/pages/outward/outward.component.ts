@@ -1,30 +1,27 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { fuseAnimations } from '@fuse/animations';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationDetails } from 'app/model/master';
-import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { Router } from '@angular/router';
-import { MatSnackBar, MatIconRegistry, MatDialog, MatDialogConfig } from '@angular/material';
-import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
 import { Guid } from 'guid-typescript';
-import { GRNItem, GRNHead, GRNWithItemView, GRNItemView } from 'app/model/warehouse-transaction-model';
+import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
+import { MArticle, MUOM } from 'app/model/warehouse-master-model';
+import { OutboundWithItemView, OutboundItem, OutboundItemView } from 'app/model/warehouse-transaction-model';
 import { FormGroup, FormArray, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatIconRegistry, MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MasterService } from 'app/services/master.service';
 import { DatePipe } from '@angular/common';
-import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 import { WarehouseTransactionService } from 'app/services/warhouse-transaction-service';
 import { WarehouseMasterService } from 'app/services/warhouse-master-service';
-import { MUOM, MArticle } from 'app/model/warehouse-master-model';
+import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 
 @Component({
-  selector: 'app-inward',
-  templateUrl: './inward.component.html',
-  styleUrls: ['./inward.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  animations: fuseAnimations
+  selector: 'app-outward',
+  templateUrl: './outward.component.html',
+  styleUrls: ['./outward.component.scss']
 })
-export class InwardComponent implements OnInit {
+export class OutwardComponent implements OnInit {
   authenticationDetails: AuthenticationDetails;
   MenuItems: string[];
   CurrentUserName: string;
@@ -35,12 +32,13 @@ export class InwardComponent implements OnInit {
   IsProgressBarVisibile: boolean;
   AllArticles: MArticle[] = [];
   AllUOMs: MUOM[] = [];
-  SelectedGRN: GRNWithItemView;
-  GRNHeadCreationFormGroup: FormGroup;
-  // GRNHeadCreationFormGroup: FormGroup;
-  GRNItemColumns: string[] = ['Code', 'Description', 'Batch', 'ManufacturedDate', 'Quantity', 'UOM', 'ExpiredDate', 'Action'];
-  GRNItemFormArray: FormArray = this._formBuilder.array([]);
-  GRNItemDataSource = new BehaviorSubject<AbstractControl[]>([]);
+  AllGRNItemBatches: string[] = [];
+  SelectedOutbound: OutboundWithItemView;
+  OutboundHeadCreationFormGroup: FormGroup;
+  // OutboundHeadCreationFormGroup: FormGroup;
+  OutboundItemColumns: string[] = ['Code', 'Description', 'Batch', 'Quantity', 'UOM', 'Action'];
+  OutboundItemFormArray: FormArray = this._formBuilder.array([]);
+  OutboundItemDataSource = new BehaviorSubject<AbstractControl[]>([]);
 
   constructor(
     private _router: Router,
@@ -56,8 +54,8 @@ export class InwardComponent implements OnInit {
   ) {
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.IsProgressBarVisibile = false;
-    this.SelectedGRN = new GRNWithItemView();
-    this.SelectedGRN.GRNItems = [];
+    this.SelectedOutbound = new OutboundWithItemView();
+    this.SelectedOutbound.OutboundItems = [];
   }
 
   ngOnInit(): void {
@@ -75,32 +73,28 @@ export class InwardComponent implements OnInit {
     } else {
       this._router.navigate(['/auth/login']);
     }
-    this.GRNHeadCreationFormGroup = this._formBuilder.group({
-      Vendor: ['', Validators.required],
-      // GRNDate: ['', Validators.required],
-      // GRNTime: ['', Validators.required],
-      // Mode: ['', Validators.required],
-      // Address: ['', Validators.required],
-      TruckNumber: ['', Validators.required],
-      ChallanDate: ['', Validators.required],
-      ChallanNumber: ['', Validators.required],
-      GRNItems: this.GRNItemFormArray
+    this.OutboundHeadCreationFormGroup = this._formBuilder.group({
+      Customer: ['', Validators.required],
+      TransferID: ['', Validators.required],
+      Date: ['', Validators.required],
+      OutboundItems: this.OutboundItemFormArray
     });
     this.GetAllArticles();
     this.GetAllUOMs();
+    this.GetAllGRNItemBatches();
   }
 
   ResetForm(): void {
-    this.GRNHeadCreationFormGroup.reset();
-    Object.keys(this.GRNHeadCreationFormGroup.controls).forEach(key => {
-      this.GRNHeadCreationFormGroup.get(key).markAsUntouched();
+    this.OutboundHeadCreationFormGroup.reset();
+    Object.keys(this.OutboundHeadCreationFormGroup.controls).forEach(key => {
+      this.OutboundHeadCreationFormGroup.get(key).markAsUntouched();
     });
   }
   ResetControl(): void {
-    this.ResetGRNItems();
+    this.ResetOutboundItems();
     this.ResetForm();
-    this.SelectedGRN = new GRNWithItemView();
-    this.SelectedGRN.GRNItems = [];
+    this.SelectedOutbound = new OutboundWithItemView();
+    this.SelectedOutbound.OutboundItems = [];
   }
 
   ClearFormArray = (formArray: FormArray) => {
@@ -108,9 +102,9 @@ export class InwardComponent implements OnInit {
       formArray.removeAt(0);
     }
   }
-  ResetGRNItems(): void {
-    this.ClearFormArray(this.GRNItemFormArray);
-    this.GRNItemDataSource.next(this.GRNItemFormArray.controls);
+  ResetOutboundItems(): void {
+    this.ClearFormArray(this.OutboundItemFormArray);
+    this.OutboundItemDataSource.next(this.OutboundItemFormArray.controls);
   }
 
   GetAllArticles(): void {
@@ -135,49 +129,60 @@ export class InwardComponent implements OnInit {
     );
   }
 
-  AddGRNItem(): void {
-    this.AddGRNItemFormGroup();
+  GetAllGRNItemBatches(): void {
+    this._warehouseMasterService.GetAllGRNItemBatches().subscribe(
+      (data) => {
+        this.AllGRNItemBatches = data as string[];
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
-  RemoveGRNItem(index: number): void {
-    if (this.GRNHeadCreationFormGroup.enabled) {
-      if (this.GRNItemFormArray.length > 0) {
-        this.GRNItemFormArray.removeAt(index);
-        this.GRNItemDataSource.next(this.GRNItemFormArray.controls);
+  AddOutboundItem(): void {
+    this.AddOutboundItemFormGroup();
+  }
+
+  RemoveOutboundItem(index: number): void {
+    if (this.OutboundHeadCreationFormGroup.enabled) {
+      if (this.OutboundItemFormArray.length > 0) {
+        this.OutboundItemFormArray.removeAt(index);
+        this.OutboundItemDataSource.next(this.OutboundItemFormArray.controls);
       } else {
         this.notificationSnackBarComponent.openSnackBar('no items to delete', SnackBarStatus.warning);
       }
     }
   }
 
-  AddGRNItemFormGroup(): void {
+  AddOutboundItemFormGroup(): void {
     const row = this._formBuilder.group({
       Code: ['', Validators.required],
       Description: ['', Validators.required],
       Batch: ['', Validators.required],
-      ManufacturedDate: ['', Validators.required],
+      // ManufacturedDate: ['', Validators.required],
       Quantity: ['', [Validators.required, Validators.pattern('^[0-9]+(.[0-9]{1,3})?$')]],
       UOM: ['', Validators.required],
-      ExpiredDate: ['', Validators.required]
+      // ExpiredDate: ['', Validators.required]
     });
-    // this.GRNItemFormArray.push(row);
-    // this.GRNItemFormArray.controls.unshift(row);
-    this.GRNItemFormArray.insert(0, row);
-    this.GRNItemDataSource.next(this.GRNItemFormArray.controls);
+    // this.OutboundItemFormArray.push(row);
+    // this.OutboundItemFormArray.controls.unshift(row);
+    this.OutboundItemFormArray.insert(0, row);
+    this.OutboundItemDataSource.next(this.OutboundItemFormArray.controls);
   }
 
   SubmitClicked(): void {
-    if (this.GRNHeadCreationFormGroup.valid) {
-      const GRNItemsArry = this.GRNHeadCreationFormGroup.get('GRNItems') as FormArray;
-      if (GRNItemsArry.length <= 0) {
-        this.notificationSnackBarComponent.openSnackBar('Please add GRN Item', SnackBarStatus.danger);
+    if (this.OutboundHeadCreationFormGroup.valid) {
+      const OutboundItemsArry = this.OutboundHeadCreationFormGroup.get('OutboundItems') as FormArray;
+      if (OutboundItemsArry.length <= 0) {
+        this.notificationSnackBarComponent.openSnackBar('Please add Outbound Item', SnackBarStatus.danger);
       } else {
         const Actiontype = 'Create';
-        const Catagory = 'GRN';
+        const Catagory = 'Outbound';
         this.OpenConfirmationDialog(Actiontype, Catagory);
       }
     } else {
-      this.ShowValidationErrors(this.GRNHeadCreationFormGroup);
+      this.ShowValidationErrors(this.OutboundHeadCreationFormGroup);
     }
   }
 
@@ -193,7 +198,7 @@ export class InwardComponent implements OnInit {
       result => {
         if (result) {
           if (Actiontype === 'Create') {
-            this.CreateGRN();
+            this.CreateOutbound();
             // console.log('valid');
           }
           else if (Actiontype === 'Approve') {
@@ -230,14 +235,14 @@ export class InwardComponent implements OnInit {
     });
   }
 
-  CreateGRN(): void {
-    this.GetGRNHeaderValues();
-    this.GetGRNItemsValues();
+  CreateOutbound(): void {
+    this.GetOutboundHeaderValues();
+    this.GetOutboundItemsValues();
     this.IsProgressBarVisibile = true;
-    this._warehouseTransactionService.CreateGRN(this.SelectedGRN).subscribe(
+    this._warehouseTransactionService.CreateOutbound(this.SelectedOutbound).subscribe(
       (data) => {
         this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar('GRN Created successfully', SnackBarStatus.success);
+        this.notificationSnackBarComponent.openSnackBar('Outbound Created successfully', SnackBarStatus.success);
         this.ResetControl();
       },
       (err) => {
@@ -248,33 +253,27 @@ export class InwardComponent implements OnInit {
     );
   }
 
-  GetGRNHeaderValues(): void {
-    this.SelectedGRN = new GRNWithItemView();
-    this.SelectedGRN.Vendor = this.GRNHeadCreationFormGroup.get('Vendor').value;
-    this.SelectedGRN.TruckNumber = this.GRNHeadCreationFormGroup.get('TruckNumber').value;
-    this.SelectedGRN.ChallanDate = this.GRNHeadCreationFormGroup.get('ChallanDate').value;
-    this.SelectedGRN.ChallanNumber = this.GRNHeadCreationFormGroup.get('ChallanNumber').value;
-    // this.SelectedGRN.GRNDate = this.GRNHeadCreationFormGroup.get('GRNDate').value;
-    // this.SelectedGRN.GRNTime = this.GRNHeadCreationFormGroup.get('GRNTime').value;
-    // this.SelectedGRN.Mode = this.GRNHeadCreationFormGroup.get('Mode').value;
-    this.SelectedGRN.CreatedBy = this.CurrentUserID.toString();
+  GetOutboundHeaderValues(): void {
+    this.SelectedOutbound = new OutboundWithItemView();
+    this.SelectedOutbound.Customer = this.OutboundHeadCreationFormGroup.get('Customer').value;
+    this.SelectedOutbound.TransferID = this.OutboundHeadCreationFormGroup.get('TransferID').value;
+    this.SelectedOutbound.Date = this.OutboundHeadCreationFormGroup.get('Date').value;
+    this.SelectedOutbound.CreatedBy = this.CurrentUserID.toString();
   }
 
-  GetGRNItemsValues(): void {
-    this.SelectedGRN.GRNItems = [];
-    const GRNItemsArr = this.GRNHeadCreationFormGroup.get('GRNItems') as FormArray;
-    GRNItemsArr.controls.forEach((x, i) => {
-      const item: GRNItemView = new GRNItemView();
+  GetOutboundItemsValues(): void {
+    this.SelectedOutbound.OutboundItems = [];
+    const OutboundItemsArr = this.OutboundHeadCreationFormGroup.get('OutboundItems') as FormArray;
+    OutboundItemsArr.controls.forEach((x, i) => {
+      const item: OutboundItemView = new OutboundItemView();
       item.Code = x.get('Code').value;
       item.Description = x.get('Description').value;
       item.Batch = x.get('Batch').value;
-      item.ManufacturedDate = x.get('ManufacturedDate').value;
+      // item.ManufacturedDate = x.get('ManufacturedDate').value;
       item.Quantity = x.get('Quantity').value;
       item.UOM = x.get('UOM').value;
-      item.ExpiredDate = x.get('ExpiredDate').value;
-      this.SelectedGRN.GRNItems.push(item);
+      // item.ExpiredDate = x.get('ExpiredDate').value;
+      this.SelectedOutbound.OutboundItems.push(item);
     });
   }
-
-
 }

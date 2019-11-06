@@ -17,4 +17,6 @@ export class MenuUpdataionService {
     PushNewMenus(menus: FuseNavigation[]): void {
         this.MenuUpdationEvent.next(menus);
     }
+
+   
 }

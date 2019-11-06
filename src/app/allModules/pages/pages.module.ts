@@ -52,6 +52,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InwardComponent } from './inward/inward.component';
+import { OutwardComponent } from './outward/outward.component';
 
 const routes = [
     {
@@ -61,6 +62,10 @@ const routes = [
     {
         path: 'inward',
         component: InwardComponent
+    },
+    {
+        path: 'outward',
+        component: OutwardComponent
     },
     {
         path: '**',
@@ -121,7 +126,7 @@ const routes = [
 
         FormsModule,
     ],
-    declarations: [DashboardComponent, InwardComponent],
+    declarations: [DashboardComponent, InwardComponent, OutwardComponent],
     providers: [],
     entryComponents: [
     ]
